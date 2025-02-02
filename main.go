@@ -1,6 +1,5 @@
 /*
-Copyright © 2025 NAME HERE <EMAIL ADDRESS>
-
+Copyright © 2025 NAME HERE ed.crookshanks@gmail.com
 */
 package main
 
