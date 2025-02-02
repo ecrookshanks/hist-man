@@ -6,6 +6,7 @@ import (
 	"io"
 	"os"
 	"os/user"
+	"runtime"
 	"slices"
 	"strings"
 )
@@ -21,7 +22,8 @@ type HistResult struct {
 	DupCounts  map[string]int
 }
 
-const bash_file = "/.bash_history"
+const linux_bash_file = "/.bash_history"
+const mac_bash_file = "/.zsh_history"
 
 func GetBashFileStats() (*HistResult, error) {
 	hr := HistResult{}
@@ -50,9 +52,13 @@ func constructCompleteFileName() (string, error) {
 		return "", err
 	}
 	dir := usr.HomeDir
-	file := dir + bash_file
 
-	return file, nil
+	os := runtime.GOOS
+	if os == "darwin" {
+		return dir + mac_bash_file, nil
+	}
+	return dir + linux_bash_file, nil
+
 }
 
 func readFileLineByLine(file string, hr *HistResult) error {
