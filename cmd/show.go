@@ -26,7 +26,7 @@ func NewShowOptions() *ShowOptions {
 	}
 }
 
-var longDesc string = `Show a subset of entries in the bash history file. For example:
+var longDesc string = `Show a subset of entries in the bash (or zsh) history file. For example:
 
 		hist show 			// show all the entries in the file.
 		hist show -b		// show the beginning (oldest) 10 entries.
@@ -50,16 +50,16 @@ func CreateShowCmd() *cobra.Command {
 	var showCmd = &cobra.Command{
 
 		Use:   "show",
-		Short: "Show a selected set of entries in the bash history file.",
+		Short: "Show a selected set of entries in the history file.",
 		Long:  longDesc,
 		Run: func(cmd *cobra.Command, args []string) {
 
 			results, err := hist.GetBashFileStats()
 			if err != nil {
-				fmt.Println("Error getting bast history content!")
+				fmt.Println("Error getting history content!")
 				return
 			}
-			fmt.Println("**** BASH HISTORY RESULTS ****")
+			fmt.Println("**** HISTORY RESULTS ****")
 
 			if o.showBeginning {
 				fmt.Printf("*** Oldest %d enties:\n", o.showCount)
