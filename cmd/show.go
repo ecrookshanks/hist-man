@@ -119,7 +119,7 @@ func CreateShowCmd() *cobra.Command {
 	showCmd.Flags().IntVarP(&o.showCount, "count", "c", 10, "The number of entries to show")
 	showCmd.Flags().BoolVarP(&o.showDup, "dupes", "d", false, "Show the duplicate entries.")
 	showCmd.Flags().BoolVarP(&o.showUniqueVals, "unique", "u", false, "Show unique entries.")
-	showCmd.Flags().BoolVarP(&o.showMaxDup, "max-dup", "m", false, "Show the maximum duplicated entry")
+	showCmd.Flags().BoolVarP(&o.showMaxDup, "max-dup", "m", false, "(use with -d) Show the maximum duplicated entry")
 
 	return showCmd
 }
