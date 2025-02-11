@@ -8,6 +8,7 @@ This project is a simple playground for a couple of things:
 
 ### build/run
 As of yet a build script has not been generated.  So the easiest way to run is with the "go run" command at the terminal.
+
 go run hist-man.go [command]
 
 The first couple of commands to be implemented with be simple:
