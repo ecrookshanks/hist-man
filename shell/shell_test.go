@@ -2,17 +2,13 @@ package shell
 
 import (
 	"os"
-	"runtime"
 	"strings"
 	"testing"
 )
 
-const pwd_file = "/etc/passwd"
-
 func Test_openShellFile(t *testing.T) {
 
-	OS := runtime.GOOS
-	if OS == "darwin" || OS == "linux" {
+	if !IsWinodwsOS() {
 
 		f, err := os.Open(pwd_file)
 		if err != nil {
@@ -28,6 +24,8 @@ func Test_openShellFile(t *testing.T) {
 		if size <= 0 {
 			t.Errorf("passswd file is zero size!!")
 		}
+	} else {
+		t.Skip()
 	}
 }
 
@@ -40,4 +38,15 @@ func Test_findShellValueInPasswdLine(t *testing.T) {
 		t.Error("Cound not fid the correct shell entry!")
 	}
 
+}
+
+func Test_findShellInPasswdFileForCurrentUser(t *testing.T) {
+
+	shell, err := GetCurrentUserDefaultShell()
+	if err != nil {
+		t.Error("Error getting the user default shell")
+	}
+	if !strings.Contains(shell, "sh") {
+		t.Errorf("Incorrect value for user default shell: %s", shell)
+	}
 }
