@@ -10,16 +10,16 @@
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "main.go",
-            "args": "hist show -d"
+            "program": "hist-man.go",
+            "args": "show -d"
         },
         {
             "name": "Run show all",
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "main.go",
-            "args": "hist show"
+            "program": "hist-man.go",
+            "args": "show"
         }
     ]
 

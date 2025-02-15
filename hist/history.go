@@ -6,9 +6,10 @@ import (
 	"io"
 	"os"
 	"os/user"
-	"runtime"
 	"slices"
 	"strings"
+
+	"github.com/ecrookshanks/hist-man/shell"
 )
 
 type HistResult struct {
@@ -53,12 +54,16 @@ func constructCompleteFileName() (string, error) {
 	}
 	dir := usr.HomeDir
 
-	os := runtime.GOOS
-	if os == "darwin" {
+	default_shell, err := shell.GetCurrentUserDefaultShell()
+	if err != nil {
+		return "", err
+	}
+
+	if strings.Contains(default_shell, "bash") {
+		return dir + linux_bash_file, nil
+	} else {
 		return dir + mac_bash_file, nil
 	}
-	return dir + linux_bash_file, nil
-
 }
 
 func readFileLineByLine(file string, hr *HistResult) error {
