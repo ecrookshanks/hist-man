@@ -57,7 +57,8 @@ func GetCurrentUserDefaultShell() (string, error) {
 			}
 		}
 	} else {
-		return "", errors.New("no default shell exists on Windows")
+		return "bash-windows", nil
+		// return "", errors.New("no default shell exists on Windows")
 	}
 	// Should be impossible - what could other error be?
 	return "", errors.New("no user name found matching the current user")

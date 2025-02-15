@@ -59,6 +59,9 @@ func constructCompleteFileName() (string, error) {
 		return "", err
 	}
 
+	if strings.Contains(default_shell, "windows") {
+		fmt.Println("*** NOTE *** Windows defaults to bash shell - may NOT work")
+	}
 	if strings.Contains(default_shell, "bash") {
 		return dir + linux_bash_file, nil
 	} else {
