@@ -30,6 +30,8 @@ var searchCmd = &cobra.Command{
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		toSearch := args[0]
+
+		found := []string{}
 		fmt.Println("search called, looking for " + toSearch)
 		results, err := hist.GetBashFileStats()
 		if err != nil {
@@ -39,11 +41,19 @@ var searchCmd = &cobra.Command{
 
 		for _, lineVal := range results.All {
 			if strings.Contains(lineVal, toSearch) {
-				fmt.Println("Found match!")
-				fmt.Println(lineVal)
-				return
+				if !showAll {
+					fmt.Println("Found match!")
+					fmt.Println(lineVal)
+					return
+				}
+				found = append(found, lineVal)
 			}
 		}
+		if showAll && len(found) > 0 {
+			fmt.Println("Results: \n" + strings.Join(found, "\n"))
+			return
+		}
+		fmt.Println("No match found for " + toSearch)
 	},
 }
 
@@ -59,4 +69,5 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// searchCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	searchCmd.Flags().BoolVarP(&showAll, "all", "a", false, "Show all instances of search term.")
 }
