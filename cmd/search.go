@@ -31,11 +31,11 @@ var searchCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		toSearch := args[0]
 
-		found := []string{}
-		fmt.Println("search called, looking for " + toSearch)
+		var foundLines []string
+		fmt.Println("SEARCH: looking for \"" + toSearch + "\"")
 		results, err := hist.GetBashFileStats()
 		if err != nil {
-			fmt.Println("Error getting bast history stats!")
+			fmt.Println("Error getting bash history stats!")
 			return
 		}
 
@@ -46,11 +46,11 @@ var searchCmd = &cobra.Command{
 					fmt.Println(lineVal)
 					return
 				}
-				found = append(found, lineVal)
+				foundLines = append(foundLines, lineVal)
 			}
 		}
-		if showAll && len(found) > 0 {
-			fmt.Println("Results: \n" + strings.Join(found, "\n"))
+		if showAll && len(foundLines) > 0 {
+			fmt.Println("Results: \n" + strings.Join(foundLines, "\n"))
 			return
 		}
 		fmt.Println("No match found for " + toSearch)
