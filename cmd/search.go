@@ -5,8 +5,9 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/ecrookshanks/hist-man/hist"
 	"strings"
+
+	"github.com/ecrookshanks/hist-man/hist"
 
 	"github.com/spf13/cobra"
 )
@@ -32,7 +33,7 @@ var searchCmd = &cobra.Command{
 		toSearch := args[0]
 
 		var foundLines []string
-		fmt.Println("SEARCH: looking for \"" + toSearch + "\"")
+		fmt.Println("SEARCH: looking for \"" + toSearch + "\" in history file.")
 		results, err := hist.GetBashFileStats()
 		if err != nil {
 			fmt.Println("Error getting bash history stats!")

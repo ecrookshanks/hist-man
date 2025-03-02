@@ -20,6 +20,14 @@
             "mode": "auto",
             "program": "hist-man.go",
             "args": "show"
+        },
+        {
+            "name": "Run search show all",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "hist-man.go",
+            "args": "search -a git"
         }
     ]
 
