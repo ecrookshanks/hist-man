@@ -41,6 +41,11 @@ var searchCmd = &cobra.Command{
 func runHandler(cmd *cobra.Command, args []string) {
 	toSearch := args[0]
 
+	if toSearch == "" {
+		fmt.Println("You must specify a search term")
+		return
+	}
+
 	var foundLines []string
 	var searchSource []string
 
