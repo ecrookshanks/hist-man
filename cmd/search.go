@@ -34,6 +34,7 @@ var searchCmd = &cobra.Command{
 	hist-man search dnf    		// returns the first instance of the command with dnf if it.
 	hist-man search -a dnf 		// returns all the instances of the dnf command.
     hist-man search -au dnf		// returns all the instances of dnf from the unique entries.
+    hist-man search -i DnF		// returns the first instance of case insensitive DnF
 	
 	`,
 	Run: runHandler,
@@ -50,7 +51,12 @@ func runHandler(cmd *cobra.Command, args []string) {
 	var foundLines []string
 	var searchSource []string
 
-	fmt.Println("SEARCH: looking for \"" + toSearch + "\" in history file.")
+	descriptive := ""
+	if caseInsensitive {
+		descriptive = " (case insensitive)"
+	}
+
+	fmt.Println("SEARCH: looking for \"" + toSearch + "\" in history file" + descriptive + ".")
 	results, err := hist.GetBashFileStats()
 	if err != nil {
 		fmt.Println("Error getting bash history stats!")
@@ -66,7 +72,6 @@ func runHandler(cmd *cobra.Command, args []string) {
 	}
 
 	for _, lineVal := range searchSource {
-		// fmt.Println("looking for line " + lineVal)
 		if findMatch(lineVal, toSearch) {
 			if !showAll {
 				fmt.Println("Found first match!")
