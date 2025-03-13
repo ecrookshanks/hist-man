@@ -15,6 +15,7 @@ import (
 var showAll bool
 var searchUnique bool
 var searchDuplicates bool
+var caseInsensitive bool
 
 // searchCmd represents the search command
 var searchCmd = &cobra.Command{
@@ -65,10 +66,11 @@ func runHandler(cmd *cobra.Command, args []string) {
 	}
 
 	for _, lineVal := range searchSource {
-		if strings.Contains(lineVal, toSearch) {
+		// fmt.Println("looking for line " + lineVal)
+		if findMatch(lineVal, toSearch) {
 			if !showAll {
-				fmt.Println("Found match!")
-				fmt.Println(lineVal)
+				fmt.Println("Found first match!")
+				fmt.Println("Full Line: " + lineVal)
 				return
 			}
 			foundLines = append(foundLines, lineVal)
@@ -79,6 +81,18 @@ func runHandler(cmd *cobra.Command, args []string) {
 		return
 	}
 	fmt.Println("No match found for " + toSearch)
+}
+
+func findMatch(line string, toMatch string) bool {
+	if caseInsensitive {
+		toMatch = strings.ToLower(toMatch)
+		line = strings.ToLower(line)
+	}
+
+	if strings.Contains(line, toMatch) {
+		return true
+	}
+	return false
 }
 
 func init() {
@@ -96,4 +110,5 @@ func init() {
 	searchCmd.Flags().BoolVarP(&showAll, "all", "a", false, "Show all instances of search term.")
 	searchCmd.Flags().BoolVarP(&searchUnique, "unique", "u", false, "Search only in unique entries.")
 	searchCmd.Flags().BoolVarP(&searchDuplicates, "dupes", "d", false, "Search only in duplicate entries.")
+	searchCmd.Flags().BoolVarP(&caseInsensitive, "insensitive", "i", false, "Search case-insensitive.")
 }
