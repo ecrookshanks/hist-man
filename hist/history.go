@@ -52,12 +52,14 @@ func constructCompleteFileName() (string, error) {
 	if err != nil {
 		return "", err
 	}
+	fmt.Printf("\"%s\" is the current detected user.\n", usr)
 	dir := usr.HomeDir
 
 	default_shell, err := shell.GetCurrentUserDefaultShell()
 	if err != nil {
 		return "", err
 	}
+	fmt.Printf("\"%s\" is the current detected shell.\n", default_shell)
 
 	if strings.Contains(default_shell, "windows") {
 		fmt.Println("*** NOTE *** Windows defaults to bash shell - may NOT work")
