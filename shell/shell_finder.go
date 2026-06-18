@@ -61,7 +61,7 @@ func GetCurrentUserDefaultShell() (string, error) {
 		// return "", errors.New("no default shell exists on Windows")
 	}
 	// If here, then the user was not found in the pwd file.  This means they're part
-	// of a corp group or other 3rd party access control.  Use default shell based on OS.
+	// of a corp group or other 3rd party access control.  Use default shell based on OS
 	OS := runtime.GOOS
 	if OS == "darwin" {
 		return "zsh", nil
