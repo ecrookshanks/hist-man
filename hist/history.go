@@ -52,7 +52,7 @@ func constructCompleteFileName() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	fmt.Printf("\"%s\" is the current detected user.\n", usr)
+	fmt.Printf("\"%s\" is the current detected user.\n", usr.Username)
 	dir := usr.HomeDir
 
 	default_shell, err := shell.GetCurrentUserDefaultShell()

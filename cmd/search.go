@@ -33,8 +33,8 @@ var searchCmd = &cobra.Command{
 
 	hist-man search dnf    		// returns the first instance of the command with dnf if it.
 	hist-man search -a dnf 		// returns all the instances of the dnf command.
-    hist-man search -au dnf		// returns all the instances of dnf from the unique entries.
-    hist-man search -i DnF		// returns the first instance of case insensitive DnF
+	hist-man search -au dnf		// returns all the instances of dnf from the unique entries.
+	hist-man search -i DnF		// returns the first instance of case insensitive DnF
 	
 	`,
 	Run: runHandler,
