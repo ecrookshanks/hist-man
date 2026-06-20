@@ -6,9 +6,10 @@ import (
 	"io"
 	"os"
 	"os/user"
-	"runtime"
 	"slices"
 	"strings"
+
+	"github.com/ecrookshanks/hist-man/shell"
 )
 
 type HistResult struct {
@@ -51,14 +52,23 @@ func constructCompleteFileName() (string, error) {
 	if err != nil {
 		return "", err
 	}
+	fmt.Printf("\"%s\" is the current detected user.\n", usr.Username)
 	dir := usr.HomeDir
 
-	os := runtime.GOOS
-	if os == "darwin" {
+	default_shell, err := shell.GetCurrentUserDefaultShell()
+	if err != nil {
+		return "", err
+	}
+	fmt.Printf("\"%s\" is the current detected shell.\n", default_shell)
+
+	if strings.Contains(default_shell, "windows") {
+		fmt.Println("*** NOTE *** Windows defaults to bash shell - may NOT work")
+	}
+	if strings.Contains(default_shell, "bash") {
+		return dir + linux_bash_file, nil
+	} else {
 		return dir + mac_bash_file, nil
 	}
-	return dir + linux_bash_file, nil
-
 }
 
 func readFileLineByLine(file string, hr *HistResult) error {

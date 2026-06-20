@@ -52,67 +52,7 @@ func CreateShowCmd() *cobra.Command {
 		Use:   "show",
 		Short: "Show a selected set of entries in the history file.",
 		Long:  longDesc,
-		Run: func(cmd *cobra.Command, args []string) {
-
-			results, err := hist.GetBashFileStats()
-			if err != nil {
-				fmt.Println("Error getting history content!")
-				return
-			}
-			fmt.Println("**** HISTORY RESULTS ****")
-
-			if o.showBeginning {
-				fmt.Printf("*** Oldest %d enties:\n", o.showCount)
-				for _, ln := range results.All[0:o.showCount] {
-					fmt.Println(ln)
-				}
-				return
-			}
-
-			if o.showLatest {
-				fmt.Printf("*** Most recent %d entries:\n", o.showCount)
-				elements := len(results.All)
-				for _, ln := range results.All[elements-o.showCount : elements] {
-					fmt.Println(ln)
-				}
-				o.showAll = false
-				return
-			}
-
-			if o.showDup {
-				if o.showMaxDup {
-					maxKey, max := hist.FindMaxDupValueAndName(results.DupCounts)
-
-					fmt.Printf("\"%s\" is the most duplicated entry, total %d repeats", maxKey, max)
-					o.showAll = false
-					return
-				}
-				fmt.Println("*** All the duplicated entries: ")
-				for _, ln := range results.DupVals {
-					fmt.Println(ln)
-				}
-				o.showAll = false
-			}
-
-			if o.showUniqueVals {
-				fmt.Println("*** All the unique entries:")
-				for _, ln := range results.UniqueVals {
-					fmt.Println(ln)
-				}
-				o.showAll = false
-			}
-
-			//
-			//TODO: Is there a better way to have a "default" action? Managing a bool
-			// 		seems like a bad idea.
-			//
-			if o.showAll {
-				fmt.Println("All entries in the history file:")
-				for _, ln := range results.All {
-					fmt.Println(ln)
-				}
-			}
-		},
+		Run:   mainCommandHandler(o),
 	}
 	showCmd.Flags().BoolVarP(&o.showBeginning, "beginning", "b", false, "Show the beginning entries (default 10).")
 	showCmd.Flags().BoolVarP(&o.showLatest, "latest", "n", false, "Show the most recent entries (default 10).")
@@ -122,6 +62,70 @@ func CreateShowCmd() *cobra.Command {
 	showCmd.Flags().BoolVarP(&o.showMaxDup, "max-dup", "m", false, "(use with -d) Show the maximum duplicated entry")
 
 	return showCmd
+}
+
+func mainCommandHandler(o *ShowOptions) func(cmd *cobra.Command, args []string) {
+	return func(cmd *cobra.Command, args []string) {
+
+		results, err := hist.GetBashFileStats()
+		if err != nil {
+			fmt.Println("Error getting history content!")
+			return
+		}
+		fmt.Println("**** HISTORY RESULTS ****")
+
+		if o.showBeginning {
+			fmt.Printf("*** Oldest %d enties:\n", o.showCount)
+			for _, ln := range results.All[0:o.showCount] {
+				fmt.Println(ln)
+			}
+			return
+		}
+
+		if o.showLatest {
+			fmt.Printf("*** Most recent %d entries:\n", o.showCount)
+			elements := len(results.All)
+			for _, ln := range results.All[elements-o.showCount : elements] {
+				fmt.Println(ln)
+			}
+			o.showAll = false
+			return
+		}
+
+		if o.showDup {
+			if o.showMaxDup {
+				maxKey, max := hist.FindMaxDupValueAndName(results.DupCounts)
+
+				fmt.Printf("\"%s\" is the most duplicated entry, total %d repeats", maxKey, max)
+				o.showAll = false
+				return
+			}
+			fmt.Println("*** All the duplicated entries: ")
+			for _, ln := range results.DupVals {
+				fmt.Println(ln)
+			}
+			o.showAll = false
+		}
+
+		if o.showUniqueVals {
+			fmt.Println("*** All the unique entries:")
+			for _, ln := range results.UniqueVals {
+				fmt.Println(ln)
+			}
+			o.showAll = false
+		}
+
+		//
+		//TODO: Is there a better way to have a "default" action? Managing a bool
+		// 		seems like a bad idea.
+		//
+		if o.showAll {
+			fmt.Println("All entries in the history file:")
+			for _, ln := range results.All {
+				fmt.Println(ln)
+			}
+		}
+	}
 }
 
 func init() {

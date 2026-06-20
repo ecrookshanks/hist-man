@@ -29,7 +29,7 @@ var sizeCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		results, err := hist.GetBashFileStats()
 		if err != nil {
-			fmt.Println("Error getting bast history stats!")
+			fmt.Println("Error getting bash history stats!")
 			return
 		}
 
