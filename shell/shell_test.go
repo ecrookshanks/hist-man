@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-const pwd_file = "/etc/passwd"
+// const pwd_file = "/etc/passwd"
 
 func Test_openShellFile(t *testing.T) {
 
