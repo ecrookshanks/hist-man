@@ -28,17 +28,17 @@ func NewShowOptions() *ShowOptions {
 
 var longDesc string = `Show a subset of entries in the bash (or zsh) history file. For example:
 
-		hist show 			// show all the entries in the file.
-		hist show -b		// show the beginning (oldest) 10 entries.
-		hist show -n		// show the last (most recent) 10 entries.
-		hist show -n -c 20	// show the last 20 entries in the file.
-		hist show -u 		// show the unique entries.
-		hist show -d		// show only the duplicated entries.
-		hist show -dm		// show the single most duplicated entry.
+		hist-man show 			// show all the entries in the file.
+		hist-man show -b		// show the beginning (oldest) 10 entries.
+		hist-man show -n		// show the last (most recent) 10 entries.
+		hist-man show -n -c 20	// show the last 20 entries in the file.
+		hist-man show -u 		// show the unique entries.
+		hist-man show -d		// show only the duplicated entries.
+		hist-man show -dm		// show the single most duplicated entry.
 
 		** potential additions **
-		hist show -dn		// show the 10 latest duplicated entries.
-		hist show -un		// show the 10 latest unique entries.
+		hist-man show -dn		// show the 10 latest duplicated entries.
+		hist-man show -un		// show the 10 latest unique entries.
 		
 `
 
